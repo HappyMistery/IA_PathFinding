@@ -22,15 +22,15 @@ public class Map {
         for(int row=0; row < charMap.length; row++){
             for(int col=0; col < charMap[0].length; col++){
                 switch(charMap[row][col]){
-                    case 'M': cost= // TODO: Define cost corresponding to "Mountain" ("Muntanya")
+                    case 'M': cost= 100000;// TODO: Define cost corresponding to "Mountain" ("Muntanya")
                     break;
-                    case 'N': cost= // TODO: Define cost corresponding to "Empty" ("Buit")
+                    case 'N': cost= 5;// TODO: Define cost corresponding to "Empty" ("Buit")
                     break;
-                    case 'A': cost= // TODO: Define cost corresponding to "Village" ("Aldea")
+                    case 'A': cost= 4;// TODO: Define cost corresponding to "Village" ("Aldea")
                     break;
-                    case 'P': cost= // TODO: Define cost corresponding to "Town" ("Poble")
+                    case 'P': cost= 2;// TODO: Define cost corresponding to "Town" ("Poble")
                     break;
-                    case 'C': cost= // TODO: Define cost corresponding to "City" ("Ciutat")
+                    case 'C': cost= 0;// TODO: Define cost corresponding to "City" ("Ciutat")
                     break;
                 }
                 costMap[row][col] = cost;

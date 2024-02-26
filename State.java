@@ -1,7 +1,11 @@
 public class State{
+    private int x;
+    private int y;
 
-    public State(){
+    public State(int x, int y){
         // TODO
+        this.x = x;
+        this.y = y;
     }
     
 
