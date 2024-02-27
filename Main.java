@@ -26,8 +26,6 @@ public class Main {
     public static void main(String args[]){      
 
       // TODO: Declare map
-      Map OMap = new Map(OriginalCharMap);
-      Map CMap = new Map(CustomCharMap);
 
       // TODO: Declare initial and target states
       State OriginalIs = new State(0, 0);
@@ -44,6 +42,13 @@ public class Main {
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
 
       // TODO: Run experiments
+      System.out.println(CustomIs.equals(1));
+      System.out.println(CustomIs.equals(CustomIs));
+      System.out.println(OriginalIs.hashCode());
+      System.out.println(OriginalTs.hashCode());
+      System.out.println(CustomIs.hashCode());
+      System.out.println(CustomTs.hashCode());
+      System.out.println(heuristics[1].Evaluate(OriginalIs, OriginalTs, OriginalMap.getCostMap()));
 
       // TODO: Show results
     }
