@@ -21,11 +21,11 @@ public abstract class Search {
         if(lastState == null) return null;
         if(newState.getX() > lastState.getX()) return "R";  //goes to the right
         else if(newState.getX() < lastState.getX()) return "L"; //goes to the left
-        else if(newState.getY() > lastState.getY()) return "D"; //goes to the top
-        else return "U";    //goes to the bottom
+        else if(newState.getY() > lastState.getY()) return "D"; //goes to the bottom
+        else return "U";    //goes to the top
     }
 
-    protected List<State> EvaluateOperators(State currentState, List<String> path, List<State> tractats){
+    protected List<State> EvaluateOperators(State currentState, List<State> tractats){
         /* TODO: Obtain the states that can be accessed from the current state.
          * Consider their cost, heuristic...
          * Feel free to change the input parameters and/or return type.
@@ -35,23 +35,6 @@ public abstract class Search {
         accessibleStates.add(new State(currentState.getX()+1, currentState.getY()));    //Right state [1]
         accessibleStates.add(new State(currentState.getX(), currentState.getY()-1));    //Bottom state [2]
         accessibleStates.add(new State(currentState.getX(), currentState.getY()+1));    //Top state [3]
-        if(!path.isEmpty()) {
-            String comesFrom = path.getLast();
-            switch (comesFrom) {
-                case "D": //Comes from the top
-                    accessibleStates.remove(2);
-                    break;
-                case "U": //Comes from the bottom
-                    accessibleStates.remove(3);
-                    break;
-                case "L": //Comes from the Right
-                    accessibleStates.remove(1);
-                    break;
-                default: //Comes from the Left
-                    accessibleStates.remove(0);
-                    break;
-            }
-        }
         accessibleStates.removeIf(state -> state.getX() > 9 || state.getX() < 0 
                                         || state.getY() > 9 || state.getY() < 0);               //eliminem l'estat si surt dels límits...
         accessibleStates.removeIf(state -> tractats.contains(state));                           //...o si ja l'hem tractat...
@@ -77,7 +60,9 @@ public abstract class Search {
                     st = new State(st.getX()+1, st.getY());
                     break;
             }
+            //System.out.println(dir);
             cost += costMap[st.getY()][st.getX()];
+            //System.out.println(cost);
         }
         return cost;
     }

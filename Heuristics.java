@@ -6,7 +6,7 @@ public class Heuristics {
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
         float cost = map[currentState.getY()][currentState.getX()];
-        return cost;
+        return cost;    //higher is worse
     }
 
     //HEURISTICA BASADA EN DISTÀNCIA (EUCLIDIANA)
@@ -17,7 +17,7 @@ public class Heuristics {
          */
         int a = currentState.getX() - targetState.getX();
         int b = currentState.getY() - targetState.getY();
-        return (float)Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2));
+        return (float)Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2)); //higher is worse
     }
 
     //HEURISTICA BASADA EN DISTÀNCIA (Euclidiana, 40%) I COST(60%)
@@ -30,6 +30,6 @@ public class Heuristics {
         float cost = map[currentState.getY()][currentState.getX()];
         float distanceCoef = (float) ((distancia/(float)(Math.sqrt(Math.pow(map.length, 2)*2)))*4);
         float costCoef = (float) ((cost/5)*6);
-        return distanceCoef+costCoef;
+        return distanceCoef+costCoef; //higher is worse
     }
 }

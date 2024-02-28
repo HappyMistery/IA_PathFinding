@@ -48,7 +48,7 @@ public class Main {
       Search bestFirstDistICost = new BestFirst(OriginalMap.getCostMap(), heuristics[2]);
 
       // TODO: Run experiments
-      System.out.println("=============================\nBEST FIRST: COST HEURISTIC\n=============================");
+      System.out.println("===========================\nBEST FIRST: COST HEURISTIC\n===========================");
       System.out.print("Path: ");
       path = bestFirstCost.DoSearch(OriginalIs, OriginalTs);
       path.forEach(dir -> System.out.print(dir+" "));

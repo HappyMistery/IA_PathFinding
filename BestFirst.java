@@ -23,7 +23,7 @@ public class BestFirst extends Search {
             if(state.equals(targetState)) {
                 trobat = true;
             } else {
-                List<State> toGo = EvaluateOperators(state, path, tractats);
+                List<State> toGo = EvaluateOperators(state, tractats);
                 addBestToWorst(toGo, targetState, pendents, tractats);
             }
             String step = knowDirection(tractats.size() > 0 ? tractats.getLast() : null, state);
@@ -35,11 +35,18 @@ public class BestFirst extends Search {
     }
 
     private void addBestToWorst(List<State> statesToOrder, State targetState, List<State> pendents, List<State> tractats) {
+        /*
         statesToOrder.sort((state1, state2) -> {
             return Float.compare(heuristic.Evaluate(state1, targetState, costMap), heuristic.Evaluate(state2, targetState, costMap));
         });
+        //*/
         for(int i = statesToOrder.size()-1; i >= 0; i--) {
             if(!tractats.contains(statesToOrder.get(i)) && !pendents.contains(statesToOrder.get(i))) pendents.addFirst(statesToOrder.get(i));
         }
+        //*
+        pendents.sort((state1, state2) -> {
+            return Float.compare(heuristic.Evaluate(state1, targetState, costMap), heuristic.Evaluate(state2, targetState, costMap));
+        });
+        //*/
     }
 }

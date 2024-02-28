@@ -30,7 +30,7 @@ public class Map {
                     break;
                     case 'P': cost=2;// TODO: Define cost corresponding to "Town" ("Poble")
                     break;
-                    case 'C': cost=0;// TODO: Define cost corresponding to "City" ("Ciutat")
+                    case 'C': cost=0.5f;// TODO: Define cost corresponding to "City" ("Ciutat")
                     break;
                 }
                 costMap[row][col] = cost;
