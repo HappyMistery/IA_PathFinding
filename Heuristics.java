@@ -13,8 +13,8 @@ public class Heuristics {
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
-        int a = Math.abs(currentState.getX()+targetState.getX());
-        int b = Math.abs(currentState.getY()+targetState.getY());
+        int a = currentState.getX()+targetState.getX();
+        int b = currentState.getY()+targetState.getY();
         return (float)Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2));
     }
 

@@ -35,13 +35,16 @@ public class Main {
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
-      heuristics[0] = Heuristics::Heuristic1;
-      heuristics[1] = Heuristics::Heuristic2;
-      heuristics[2] = Heuristics::Heuristic3;
+      heuristics[0] = Heuristics::Heuristic1; //HEURISTICA BASADA EN DINERS GASTATS
+      heuristics[1] = Heuristics::Heuristic2; //HEURISTICA BASADA EN DISTÀNCIA (EUCLIDIANA)
+      heuristics[2] = Heuristics::Heuristic3; //HEURISTICA BASADA EN TEMPS (40%) I DINERS(60%)
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
+      Search bestFirstDistance = new BestFirst(OriginalMap.getCostMap(), heuristics[1]);
 
       // TODO: Run experiments
+      System.out.println(bestFirstDistance.DoSearch(OriginalIs, OriginalTs));
+      /*
       System.out.println(CustomIs.equals(1));
       System.out.println(CustomIs.equals(CustomIs));
       System.out.println(OriginalIs.hashCode());
@@ -49,6 +52,7 @@ public class Main {
       System.out.println(CustomIs.hashCode());
       System.out.println(CustomTs.hashCode());
       System.out.println(heuristics[1].Evaluate(OriginalIs, OriginalTs, OriginalMap.getCostMap()));
+      //*/
 
       // TODO: Show results
     }
