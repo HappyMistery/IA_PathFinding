@@ -5,6 +5,8 @@ public class Heuristics {
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
+        float cost = map[currentState.getY()][currentState.getX()];
+        return cost;
     }
 
     //HEURISTICA BASADA EN DISTÀNCIA (EUCLIDIANA)
@@ -13,16 +15,21 @@ public class Heuristics {
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
-        int a = currentState.getX()+targetState.getX();
-        int b = currentState.getY()+targetState.getY();
+        int a = currentState.getX() - targetState.getX();
+        int b = currentState.getY() - targetState.getY();
         return (float)Math.sqrt(Math.pow(a, 2)+Math.pow(b, 2));
     }
 
-    //HEURISTICA BASADA EN TEMPS (40%) I DINERS(60%)
+    //HEURISTICA BASADA EN DISTÀNCIA (Euclidiana, 40%) I COST(60%)
     public static float Heuristic3(State currentState, State targetState, float[][] map){
         /* TODO: Implement a heuristic 
          * You CANNOT change the input parameters and return type.
          * The value returned can ONLY be based on the current state and the target state, NOT intermediate states.
          */
+        float distancia = Heuristic2(currentState, targetState, map);
+        float cost = map[currentState.getY()][currentState.getX()];
+        float distanceCoef = (float) ((distancia/(float)(Math.sqrt(Math.pow(map.length, 2)*2)))*4);
+        float costCoef = (float) ((cost/5)*6);
+        return distanceCoef+costCoef;
     }
 }

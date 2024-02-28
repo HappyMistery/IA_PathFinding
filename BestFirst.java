@@ -38,8 +38,8 @@ public class BestFirst extends Search {
         statesToOrder.sort((state1, state2) -> {
             return Float.compare(heuristic.Evaluate(state1, targetState, costMap), heuristic.Evaluate(state2, targetState, costMap));
         });
-        for(State st : statesToOrder) {
-            if(!tractats.contains(st) && !pendents.contains(st)) pendents.addFirst(st);
+        for(int i = statesToOrder.size()-1; i >= 0; i--) {
+            if(!tractats.contains(statesToOrder.get(i)) && !pendents.contains(statesToOrder.get(i))) pendents.addFirst(statesToOrder.get(i));
         }
     }
 }

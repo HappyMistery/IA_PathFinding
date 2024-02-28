@@ -1,3 +1,5 @@
+import java.util.List;
+
 public class Main {
 
     public static char[][] OriginalCharMap = {
@@ -32,6 +34,7 @@ public class Main {
       State OriginalTs = new State(9, 9);
       State CustomIs = new State(0, 0);
       State CustomTs = new State(5, 5);
+      List<String> path;
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
@@ -40,10 +43,26 @@ public class Main {
       heuristics[2] = Heuristics::Heuristic3; //HEURISTICA BASADA EN TEMPS (40%) I DINERS(60%)
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
+      Search bestFirstCost = new BestFirst(OriginalMap.getCostMap(), heuristics[0]);
       Search bestFirstDistance = new BestFirst(OriginalMap.getCostMap(), heuristics[1]);
+      Search bestFirstDistICost = new BestFirst(OriginalMap.getCostMap(), heuristics[2]);
 
       // TODO: Run experiments
-      System.out.println(bestFirstDistance.DoSearch(OriginalIs, OriginalTs));
+      System.out.println("=============================\nBEST FIRST: COST HEURISTIC\n=============================");
+      System.out.print("Path: ");
+      path = bestFirstCost.DoSearch(OriginalIs, OriginalTs);
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
+      System.out.println("\n\n================================\nBEST FIRST: DISTANCE HEURISTIC\n================================");
+      System.out.print("Path: ");
+      path = bestFirstDistance.DoSearch(OriginalIs, OriginalTs);
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("\n\n=======================================\nBEST FIRST: DISTANCE & COST HEURISTIC\n=======================================");
+      System.out.print("Path: ");
+      path = bestFirstDistICost.DoSearch(OriginalIs, OriginalTs);
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
       /*
       System.out.println(CustomIs.equals(1));
       System.out.println(CustomIs.equals(CustomIs));

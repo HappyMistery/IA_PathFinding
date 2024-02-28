@@ -58,4 +58,27 @@ public abstract class Search {
         accessibleStates.removeIf(state -> costMap[state.getY()][state.getX()] == 100000);      //...o si és una muntanya
         return accessibleStates;
     }
+
+    public float calculateCost(State iniState, List<String> path) {
+        State st = iniState;
+        float cost = 0;
+        for(String dir : path){
+            switch (dir) {
+                case "U":   //goes up
+                    st = new State(st.getX(), st.getY()-1);
+                    break;
+                case "D":   //goes down
+                    st = new State(st.getX(), st.getY()+1);
+                    break;
+                case "L":   //goes left
+                    st = new State(st.getX()-1, st.getY());
+                    break;
+                default:    //goes right
+                    st = new State(st.getX()+1, st.getY());
+                    break;
+            }
+            cost += costMap[st.getY()][st.getX()];
+        }
+        return cost;
+    }
 }
