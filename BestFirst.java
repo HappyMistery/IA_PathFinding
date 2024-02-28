@@ -1,5 +1,6 @@
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class BestFirst extends Search {
 
@@ -35,18 +36,18 @@ public class BestFirst extends Search {
     }
 
     private void addBestToWorst(List<State> statesToOrder, State targetState, List<State> pendents, List<State> tractats) {
-        /*
-        statesToOrder.sort((state1, state2) -> {
-            return Float.compare(heuristic.Evaluate(state1, targetState, costMap), heuristic.Evaluate(state2, targetState, costMap));
-        });
-        //*/
-        for(int i = statesToOrder.size()-1; i >= 0; i--) {
-            if(!tractats.contains(statesToOrder.get(i)) && !pendents.contains(statesToOrder.get(i))) pendents.addFirst(statesToOrder.get(i));
+        Comparator<State> comparator = (state1, state2) -> {        //we'll sort the list by the heuristic (lower is better, higher is worse)
+            float heuristic1 = heuristic.Evaluate(state1, targetState, costMap);
+            float heuristic2 = heuristic.Evaluate(state2, targetState, costMap);
+            return Float.compare(heuristic1, heuristic2);
+        };
+
+        statesToOrder.removeIf(state -> pendents.contains(state));
+        pendents.addAll(statesToOrder);
+        pendents.sort(comparator);
+        for (State st : pendents) {
+            System.out.println(st.getX()+" "+st.getY()+" --> "+heuristic.Evaluate(st, targetState, costMap));
         }
-        //*
-        pendents.sort((state1, state2) -> {
-            return Float.compare(heuristic.Evaluate(state1, targetState, costMap), heuristic.Evaluate(state2, targetState, costMap));
-        });
-        //*/
+        System.out.println("///////////////////////////////////////");
     }
 }
