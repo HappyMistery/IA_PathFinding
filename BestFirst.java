@@ -42,12 +42,17 @@ public class BestFirst extends Search {
             return Float.compare(heuristic1, heuristic2);
         };
 
-        statesToOrder.removeIf(state -> pendents.contains(state));
-        pendents.addAll(statesToOrder);
-        pendents.sort(comparator);
+        pendents.removeIf(state -> statesToOrder.contains(state));
+        if(statesToOrder.isEmpty()) System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
+        statesToOrder.sort(comparator);
+        for(int i = statesToOrder.size()-1; i >= 0; i--) {
+            pendents.addFirst(statesToOrder.get(i));
+        }
+        /* 
         for (State st : pendents) {
             System.out.println(st.getX()+" "+st.getY()+" --> "+heuristic.Evaluate(st, targetState, costMap));
         }
         System.out.println("///////////////////////////////////////");
+        //*/
     }
 }

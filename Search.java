@@ -18,11 +18,13 @@ public abstract class Search {
     }   
     
     protected String knowDirection(State lastState, State newState) {
+        String dir = "";
         if(lastState == null) return null;
-        if(newState.getX() > lastState.getX()) return "R";  //goes to the right
-        else if(newState.getX() < lastState.getX()) return "L"; //goes to the left
-        else if(newState.getY() > lastState.getY()) return "D"; //goes to the bottom
-        else return "U";    //goes to the top
+        if(newState.getX() > lastState.getX()) dir = "R";  //goes to the right
+        else if(newState.getX() < lastState.getX()) dir = "L"; //goes to the left
+        else if(newState.getY() > lastState.getY()) dir = "D"; //goes to the bottom
+        else dir = "U";    //goes to the top
+        return dir;
     }
 
     protected List<State> EvaluateOperators(State currentState, List<State> tractats){
