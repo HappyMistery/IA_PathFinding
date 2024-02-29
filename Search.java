@@ -37,8 +37,8 @@ public abstract class Search {
         accessibleStates.add(new State(currentState.getX()+1, currentState.getY()));    //Right state [1]
         accessibleStates.add(new State(currentState.getX(), currentState.getY()-1));    //Bottom state [2]
         accessibleStates.add(new State(currentState.getX(), currentState.getY()+1));    //Top state [3]
-        accessibleStates.removeIf(state -> state.getX() > 9 || state.getX() < 0 
-                                        || state.getY() > 9 || state.getY() < 0);               //eliminem l'estat si surt dels límits...
+        accessibleStates.removeIf(state -> state.getX() > costMap.length-1 || state.getX() < 0 
+                                        || state.getY() > costMap.length-1 || state.getY() < 0);               //eliminem l'estat si surt dels límits...
         accessibleStates.removeIf(state -> tractats.contains(state));                           //...o si ja l'hem tractat...
         accessibleStates.removeIf(state -> costMap[state.getY()][state.getX()] == 100000);      //...o si és una muntanya
         return accessibleStates;

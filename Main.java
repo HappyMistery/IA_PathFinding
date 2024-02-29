@@ -17,11 +17,11 @@ public class Main {
     public static Map OriginalMap = new Map(OriginalCharMap);
 
     public static char[][] CustomCharMap = {
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
-      {'N','N','N','N','N'},
+      {'N','N','P','C','P'},
+      {'A','A','M','N','N'},
+      {'A','M','M','N','N'},
+      {'N','N','N','M','C'},
+      {'N','P','P','N','C'},
     };
     public static Map CustomMap = new Map(CustomCharMap);
 
@@ -33,9 +33,7 @@ public class Main {
       State OriginalIs = new State(0, 0);
       State OriginalTs = new State(9, 9);
       State CustomIs = new State(0, 0);
-      State CustomTs = new State(5, 5);
-      List<String> path;
-      int visitedStates;
+      State CustomTs = new State(4, 4);
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
@@ -44,12 +42,19 @@ public class Main {
       heuristics[2] = Heuristics::Heuristic3; //HEURISTICA BASADA EN TEMPS (40%) I DINERS(60%)
 
       // TODO: Declare search algorithms (if desired, you can move this under "Run experiments")
-      Search bestFirstCost = new BestFirst(OriginalMap.getCostMap(), heuristics[0]);
-      Search bestFirstDistance = new BestFirst(OriginalMap.getCostMap(), heuristics[1]);
-      Search bestFirstDistICost = new BestFirst(OriginalMap.getCostMap(), heuristics[2]);
-      Search AStarCost = new AStar(OriginalMap.getCostMap(), heuristics[0]);
-      Search AStarDistance = new AStar(OriginalMap.getCostMap(), heuristics[1]);
-      Search AStarDistICost = new AStar(OriginalMap.getCostMap(), heuristics[2]);
+      Search bestFirstCostO = new BestFirst(OriginalMap.getCostMap(), heuristics[0]);
+      Search bestFirstDistanceO = new BestFirst(OriginalMap.getCostMap(), heuristics[1]);
+      Search bestFirstDistICostO = new BestFirst(OriginalMap.getCostMap(), heuristics[2]);
+      Search AStarCostO = new AStar(OriginalMap.getCostMap(), heuristics[0]);
+      Search AStarDistanceO = new AStar(OriginalMap.getCostMap(), heuristics[1]);
+      Search AStarDistICostO = new AStar(OriginalMap.getCostMap(), heuristics[2]);
+
+      Search bestFirstCostC = new BestFirst(CustomMap.getCostMap(), heuristics[0]);
+      Search bestFirstDistanceC = new BestFirst(CustomMap.getCostMap(), heuristics[1]);
+      Search bestFirstDistICostC = new BestFirst(CustomMap.getCostMap(), heuristics[2]);
+      Search AStarCostC = new AStar(CustomMap.getCostMap(), heuristics[0]);
+      Search AStarDistanceC = new AStar(CustomMap.getCostMap(), heuristics[1]);
+      Search AStarDistICostC = new AStar(CustomMap.getCostMap(), heuristics[2]);
 
       // TODO: Run experiments
       
@@ -58,62 +63,56 @@ public class Main {
       System.out.println("===========================================\n" +
                         "ALGORITHM: BEST FIRST      HEURISTIC: COST\n" +
                         "===========================================");
-      System.out.print("Path: ");
-      path = bestFirstCost.DoSearch(OriginalIs, OriginalTs);
-      visitedStates = Integer.parseInt(path.getLast());
-      path.removeLast();
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
-      System.out.println("Visited States: "+visitedStates);
+      SearchAndshowStats(bestFirstCostO, bestFirstCostC, OriginalIs, OriginalTs, CustomIs, CustomTs);
       System.out.println("\n===============================================\n" +
                         "ALGORITHM: BEST FIRST      HEURISTIC: DISTANCE\n" +
                         "===============================================");
-      System.out.print("Path: ");
-      path = bestFirstDistance.DoSearch(OriginalIs, OriginalTs);
-      visitedStates = Integer.parseInt(path.getLast());
-      path.removeLast();
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
-      System.out.println("Visited States: "+visitedStates);
+      SearchAndshowStats(bestFirstDistanceO, bestFirstDistanceC, OriginalIs, OriginalTs, CustomIs, CustomTs);
       System.out.println("\n======================================================\n" +
                           "ALGORITHM: BEST FIRST      HEURISTIC: DISTANCE & COST\n" +
                           "======================================================");
-      System.out.print("Path: ");
-      path = bestFirstDistICost.DoSearch(OriginalIs, OriginalTs);
-      visitedStates = Integer.parseInt(path.getLast());
-      path.removeLast();
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
-      System.out.println("Visited States: "+visitedStates);
+      SearchAndshowStats(bestFirstDistICostO, bestFirstDistICostC, OriginalIs, OriginalTs, CustomIs, CustomTs);
       System.out.println("\n===================================\n" +
                         "ALGORITHM: A*      HEURISTIC: COST\n" +
                         "===================================");
-      System.out.print("Path: ");
-      path = AStarCost.DoSearch(OriginalIs, OriginalTs);
-      visitedStates = Integer.parseInt(path.getLast());
-      path.removeLast();
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
-      System.out.println("Visited States: "+visitedStates);
+      SearchAndshowStats(AStarCostO, AStarCostC, OriginalIs, OriginalTs, CustomIs, CustomTs);
       System.out.println("\n=======================================\n" +
                         "ALGORITHM: A*      HEURISTIC: DISTANCE\n" +
                         "=======================================");
-      System.out.print("Path: ");
-      path = AStarDistance.DoSearch(OriginalIs, OriginalTs);
-      visitedStates = Integer.parseInt(path.getLast());
-      path.removeLast();
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
-      System.out.println("Visited States: "+visitedStates);
+      SearchAndshowStats(AStarDistanceO, AStarDistanceC, OriginalIs, OriginalTs, CustomIs, CustomTs);
       System.out.println("\n==============================================\n" +
                           "ALGORITHM: A*      HEURISTIC: DISTANCE & COST\n" +
                           "==============================================");
+      SearchAndshowStats(AStarDistICostO, AStarDistICostC, OriginalIs, OriginalTs, CustomIs, CustomTs);
+    }
+
+
+    private static void SearchAndshowStats(Search algoO, Search algoC, State OriginalIs, State OriginalTs, State CustomIs, State CustomTs) {
+      List<String> path;
+      int visitedStates;
+      float cost;
+
+      System.out.println("----ORIGINAL MAP STATISTICS----");
       System.out.print("Path: ");
-      path = AStarDistICost.DoSearch(OriginalIs, OriginalTs);
+      path = algoO.DoSearch(OriginalIs, OriginalTs);
       visitedStates = Integer.parseInt(path.getLast());
       path.removeLast();
       path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("\nTime to travel: "+path.size()+" days");
+      cost = algoO.calculateCost(OriginalIs, path);
+      System.out.println("Cost: "+cost);
+      System.out.println("Cost-optimal: "+(cost > 31.0f ? "No" : "Yes"));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n----CUSTOM MAP STATISTICS----");
+      System.out.print("Path: ");
+      path = algoC.DoSearch(CustomIs, CustomTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nTime to travel: "+path.size()+" days");
+      cost = algoC.calculateCost(CustomIs, path);
+      System.out.println("Cost: "+cost);
+      System.out.println("Cost-optimal: "+(cost > 20.5f ? "No" : "Yes"));
       System.out.println("Visited States: "+visitedStates);
     }
 }
