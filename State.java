@@ -1,11 +1,17 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class State{
     private int x;
     private int y;
+    private List<String> path;
+    private float heuristic;
 
     public State(int x, int y){
         // TODO
         this.x = x;
         this.y = y;
+        path = new ArrayList<>();
     }
     
     public int getX() {
@@ -14,6 +20,22 @@ public class State{
 
     public int getY() {
         return y;
+    }
+
+    public List<String> getPath() {
+        return path;
+    }
+
+    public float getHeuristic() {
+        return heuristic;
+    }
+
+    public void setPath(List<String> path) {
+        this.path = path;
+    }
+
+    public void setHeuristic(float heuristic) {
+        this.heuristic = heuristic;
     }
 
     @Override

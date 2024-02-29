@@ -1,6 +1,5 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class BestFirst extends Search {
 
@@ -13,46 +12,39 @@ public class BestFirst extends Search {
         /* TODO: Implement search algorithm
          * You CANNOT change the input parameters (i.e., initial and target state).
          * However, feel free to use inheritance, auxiliar methods and/or change the return type. */
-        List<String> path = new ArrayList<>();
         List<State> pendents = new ArrayList<>();
         pendents.add(initialState);
         List<State> tractats = new ArrayList<>(); 
         boolean trobat = false;
+        State state = null;
         while (!trobat && !pendents.isEmpty()) {
-            State state = pendents.getFirst();
+            state = pendents.getFirst();
             pendents.removeFirst();
             if(state.equals(targetState)) {
                 trobat = true;
             } else {
                 List<State> toGo = EvaluateOperators(state, tractats);
-                addBestToWorst(toGo, targetState, pendents, tractats);
+                addWithOrder(toGo, state, targetState, pendents, tractats);
             }
-            String step = knowDirection(tractats.size() > 0 ? tractats.getLast() : null, state);
-            if(step != null) path.add(step);
-            tractats.add(state);
         }
-        if(trobat) return path;
+        if(trobat) return state.getPath();
         else return null;
     }
 
-    private void addBestToWorst(List<State> statesToOrder, State targetState, List<State> pendents, List<State> tractats) {
-        Comparator<State> comparator = (state1, state2) -> {        //we'll sort the list by the heuristic (lower is better, higher is worse)
-            float heuristic1 = heuristic.Evaluate(state1, targetState, costMap);
-            float heuristic2 = heuristic.Evaluate(state2, targetState, costMap);
-            return Float.compare(heuristic1, heuristic2);
-        };
+    private void addWithOrder(List<State> statesToOrder, State currentState, State targetState, List<State> pendents, List<State> tractats) {
+        statesToOrder.removeIf(state -> pendents.contains(state));
+        for(State st : statesToOrder) {
+            st.setHeuristic(heuristic.Evaluate(st, targetState, costMap));
+            List<String> statePath = new ArrayList<>(currentState.getPath());
+            String step = knowDirection(currentState, st);
+            if(step != null) statePath.add(step);
+            st.setPath(statePath);
+            pendents.add(st);
+        }
 
-        pendents.removeIf(state -> statesToOrder.contains(state));
-        if(statesToOrder.isEmpty()) System.out.println("AAAAAAAAAAAAAAAAAAAAAAAA");
-        statesToOrder.sort(comparator);
-        for(int i = statesToOrder.size()-1; i >= 0; i--) {
-            pendents.addFirst(statesToOrder.get(i));
-        }
-        /* 
-        for (State st : pendents) {
-            System.out.println(st.getX()+" "+st.getY()+" --> "+heuristic.Evaluate(st, targetState, costMap));
-        }
-        System.out.println("///////////////////////////////////////");
-        //*/
+        pendents.sort((state1, state2) -> {
+            return Float.compare(state1.getHeuristic(), state2.getHeuristic());
+        });
+        tractats.add(currentState);
     }
 }
