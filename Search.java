@@ -62,9 +62,7 @@ public abstract class Search {
                     st = new State(st.getX()+1, st.getY());
                     break;
             }
-            //System.out.println(dir);
             cost += costMap[st.getY()][st.getX()];
-            //System.out.println(cost);
         }
         return cost;
     }

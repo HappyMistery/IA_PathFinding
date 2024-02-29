@@ -35,6 +35,7 @@ public class Main {
       State CustomIs = new State(0, 0);
       State CustomTs = new State(5, 5);
       List<String> path;
+      int visitedStates;
 
       // Declare heuristics
       Heuristic[] heuristics = new Heuristic[3];
@@ -46,34 +47,74 @@ public class Main {
       Search bestFirstCost = new BestFirst(OriginalMap.getCostMap(), heuristics[0]);
       Search bestFirstDistance = new BestFirst(OriginalMap.getCostMap(), heuristics[1]);
       Search bestFirstDistICost = new BestFirst(OriginalMap.getCostMap(), heuristics[2]);
+      Search AStarCost = new AStar(OriginalMap.getCostMap(), heuristics[0]);
+      Search AStarDistance = new AStar(OriginalMap.getCostMap(), heuristics[1]);
+      Search AStarDistICost = new AStar(OriginalMap.getCostMap(), heuristics[2]);
 
       // TODO: Run experiments
-      System.out.println("===========================\nBEST FIRST: COST HEURISTIC\n===========================");
-      System.out.print("Path: ");
-      path = bestFirstCost.DoSearch(OriginalIs, OriginalTs);
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
-      System.out.println("\n\n================================\nBEST FIRST: DISTANCE HEURISTIC\n================================");
-      System.out.print("Path: ");
-      path = bestFirstDistance.DoSearch(OriginalIs, OriginalTs);
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
-      System.out.println("\n\n=======================================\nBEST FIRST: DISTANCE & COST HEURISTIC\n=======================================");
-      System.out.print("Path: ");
-      path = bestFirstDistICost.DoSearch(OriginalIs, OriginalTs);
-      path.forEach(dir -> System.out.print(dir+" "));
-      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
-      /*
-      System.out.println(CustomIs.equals(1));
-      System.out.println(CustomIs.equals(CustomIs));
-      System.out.println(OriginalIs.hashCode());
-      System.out.println(OriginalTs.hashCode());
-      System.out.println(CustomIs.hashCode());
-      System.out.println(CustomTs.hashCode());
-      System.out.println(heuristics[1].Evaluate(OriginalIs, OriginalTs, OriginalMap.getCostMap()));
-      //*/
+      
 
       // TODO: Show results
+      System.out.println("===========================================\n" +
+                        "ALGORITHM: BEST FIRST      HEURISTIC: COST\n" +
+                        "===========================================");
+      System.out.print("Path: ");
+      path = bestFirstCost.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n===============================================\n" +
+                        "ALGORITHM: BEST FIRST      HEURISTIC: DISTANCE\n" +
+                        "===============================================");
+      System.out.print("Path: ");
+      path = bestFirstDistance.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n======================================================\n" +
+                          "ALGORITHM: BEST FIRST      HEURISTIC: DISTANCE & COST\n" +
+                          "======================================================");
+      System.out.print("Path: ");
+      path = bestFirstDistICost.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n===================================\n" +
+                        "ALGORITHM: A*      HEURISTIC: COST\n" +
+                        "===================================");
+      System.out.print("Path: ");
+      path = AStarCost.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstCost.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n=======================================\n" +
+                        "ALGORITHM: A*      HEURISTIC: DISTANCE\n" +
+                        "=======================================");
+      System.out.print("Path: ");
+      path = AStarDistance.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
+      System.out.println("\n==============================================\n" +
+                          "ALGORITHM: A*      HEURISTIC: DISTANCE & COST\n" +
+                          "==============================================");
+      System.out.print("Path: ");
+      path = AStarDistICost.DoSearch(OriginalIs, OriginalTs);
+      visitedStates = Integer.parseInt(path.getLast());
+      path.removeLast();
+      path.forEach(dir -> System.out.print(dir+" "));
+      System.out.println("\nCost: "+bestFirstDistance.calculateCost(OriginalIs, path));
+      System.out.println("Visited States: "+visitedStates);
     }
 }
 

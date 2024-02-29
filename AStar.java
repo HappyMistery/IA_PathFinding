@@ -1,9 +1,9 @@
 import java.util.List;
 import java.util.ArrayList;
 
-public class BestFirst extends Search {
+public class AStar extends Search {
 
-    public BestFirst(float[][] costMap, Heuristic heuristic){
+    public AStar(float[][] costMap, Heuristic heuristic){
         super(costMap, heuristic);
     }
 
@@ -33,18 +33,20 @@ public class BestFirst extends Search {
     }
 
     private void addWithOrder(List<State> statesToOrder, State currentState, State targetState, List<State> pendents, List<State> tractats) {
-        statesToOrder.removeIf(state -> pendents.contains(state));
         for(State st : statesToOrder) {
             st.setHeuristic(heuristic.Evaluate(st, targetState, costMap));
             List<String> statePath = new ArrayList<>(currentState.getPath());
             String step = knowDirection(currentState, st);
             if(step != null) statePath.add(step);
             st.setPath(statePath);
-            pendents.add(st);
+
+            if(!pendents.contains(st))
+                pendents.add(st);
+            //else if (calculateCost(new State(0, 0), statePath) > calculateCost(new State(0, 0), pendents.getFirst().getPath()))
         }
 
         pendents.sort((state1, state2) -> {
-            return Float.compare(state1.getHeuristic(), state2.getHeuristic());
+            return Float.compare(state1.getHeuristic() + calculateCost(new State(0, 0), state1.getPath()), state2.getHeuristic() + calculateCost(new State(0, 0), state2.getPath()));
         });
         tractats.add(currentState);
     }
