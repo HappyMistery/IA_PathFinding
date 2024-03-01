@@ -101,7 +101,7 @@ public class Main {
       System.out.println("\nTime to travel: "+path.size()+" days");
       cost = algoO.calculateCost(OriginalIs, path);
       System.out.println("Cost: "+cost);
-      System.out.println("Cost-optimal: "+(cost > 31.0f ? "No" : "Yes"));
+      System.out.println("Cost-optimal: "+(cost > 33.0f ? "No" : "Yes"));
       System.out.println("Visited States: "+visitedStates);
       System.out.println("\n----CUSTOM MAP STATISTICS----");
       System.out.print("Path: ");
@@ -112,7 +112,7 @@ public class Main {
       System.out.println("\nTime to travel: "+path.size()+" days");
       cost = algoC.calculateCost(CustomIs, path);
       System.out.println("Cost: "+cost);
-      System.out.println("Cost-optimal: "+(cost > 20.5f ? "No" : "Yes"));
+      System.out.println("Cost-optimal: "+(cost > 25.5f ? "No" : "Yes"));
       System.out.println("Visited States: "+visitedStates);
     }
 }

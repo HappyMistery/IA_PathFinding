@@ -46,7 +46,7 @@ public abstract class Search {
 
     public float calculateCost(State iniState, List<String> path) {
         State st = iniState;
-        float cost = 0;
+        float cost = costMap[st.getY()][st.getX()];
         for(String dir : path){
             switch (dir) {
                 case "U":   //goes up

@@ -32,7 +32,7 @@ public class Heuristics {
         float cost = search.calculateCost(new State(0, 0), currentState.getPath());
         float distanceCoef = (float) ((distancia/(float)(Math.sqrt(Math.pow(map.length, 2)*2)))*4);
         //float costCoef = (float) ((cost/5)*6);    //(cost/5) because max tile cost is 5
-        float costCoef = (float) ((cost/31)*6); //(cost/31) because optimal final cost is 31
+        float costCoef = (float) ((cost/33)*6); //(cost/33) because optimal final cost is 33
         return distanceCoef+costCoef; //higher is worse
     }
 }
